@@ -1,5 +1,6 @@
 use std::cmp::Ordering;
 use std::io;
+use std::io::Write;
 
 fn main() {
     println!("Multiplication Game");
@@ -11,7 +12,8 @@ fn main() {
     let facts = build_facts_vector(min, max);
 
     for fact in facts {
-        println!("{} x {}", fact.0, fact.1);
+        print!("{} x {}: ", fact.0, fact.1);
+        io::stdout().flush().unwrap();
         let answer = fact.0 * fact.1;
         let guess = get_integer();
 
