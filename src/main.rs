@@ -1,3 +1,5 @@
+use rand::seq::SliceRandom;
+use rand::thread_rng;
 use std::cmp::Ordering;
 use std::io;
 use std::io::Write;
@@ -44,6 +46,8 @@ fn build_facts_vector(min: i32, max: i32) -> Vec<(i32, i32)> {
             facts.push((i, j));
         }
     }
+
+    facts.shuffle(&mut thread_rng());
 
     return facts;
 }
