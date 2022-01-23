@@ -1,6 +1,5 @@
 use rand::seq::SliceRandom;
 use rand::thread_rng;
-use std::cmp::Ordering;
 use std::io;
 use std::io::Write;
 
@@ -14,17 +13,20 @@ fn main() {
     let facts = build_facts_vector(min, max);
 
     for fact in facts {
-        print!("{} x {}: ", fact.0, fact.1);
-        io::stdout().flush().unwrap();
-        let answer = fact.0 * fact.1;
-        let guess = get_integer();
-
-        match guess.cmp(&answer) {
-            Ordering::Less => println!("Too small!"),
-            Ordering::Greater => println!("Too big!"),
-            Ordering::Equal => println!("Perfect!"),
+        while (!request_fact(fact)) {
+            println!("Try again");
         }
+        println!("Exactly!");
     }
+}
+
+fn request_fact(fact: (i32, i32)) -> bool {
+    print!("{} x {}: ", fact.0, fact.1);
+    io::stdout().flush().unwrap();
+    let answer = fact.0 * fact.1;
+    let guess = get_integer();
+
+    return guess == answer;
 }
 
 fn get_integer() -> i32 {
