@@ -12,7 +12,21 @@ fn main() {
     let max = get_integer();
     let facts = build_facts_vector(min, max);
 
+    let mut streak = 0;
+
     for fact in facts {
+        let first_try = request_fact(fact);
+        if (first_try) {
+            streak += 1;
+            println!("First try! Your streak is {}.", streak);
+            continue;
+        } else {
+            println!("Try again");
+            if (streak > 0) {
+                println!("Your streak of {} was broken.", streak);
+                streak = 0;
+            }
+        }
         while (!request_fact(fact)) {
             println!("Try again");
         }
