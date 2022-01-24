@@ -18,22 +18,20 @@ fn main() {
     let start = Instant::now();
 
     for fact in facts {
-        let first_try = request_fact(fact);
-        if first_try {
+        let mut failed_attempts = 0;
+        while !request_fact(fact) {
+            failed_attempts += 1;
+            println!("Try again");
+        }
+        if failed_attempts == 0 {
             streak += 1;
             println!("First try! Your streak is {}.", streak);
-            continue;
         } else {
-            println!("Try again");
             if streak > 0 {
-                println!("Your streak of {} was broken.", streak);
+                println!("You got it! Unfortunately your streak of {} was broken.", streak);
                 streak = 0;
             }
         }
-        while !request_fact(fact) {
-            println!("Try again");
-        }
-        println!("Exactly!");
     }
 
     let total_time = start.elapsed();
