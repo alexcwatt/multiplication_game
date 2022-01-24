@@ -2,6 +2,7 @@ use rand::seq::SliceRandom;
 use rand::thread_rng;
 use std::io;
 use std::io::Write;
+use std::time::Instant;
 
 fn main() {
     println!("Multiplication Game");
@@ -11,8 +12,10 @@ fn main() {
     println!("And the largest?");
     let max = get_integer();
     let facts = build_facts_vector(min, max);
+    let count = facts.len();
 
     let mut streak = 0;
+    let start = Instant::now();
 
     for fact in facts {
         let first_try = request_fact(fact);
@@ -32,6 +35,9 @@ fn main() {
         }
         println!("Exactly!");
     }
+
+    let total_time = start.elapsed();
+    println!("You solved {} math facts in {} seconds", count, total_time.as_secs());
 }
 
 fn request_fact(fact: (i32, i32)) -> bool {
